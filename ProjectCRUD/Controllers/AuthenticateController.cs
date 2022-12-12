@@ -25,11 +25,13 @@ namespace ProjectCRUD.Controllers
             var id = await _authRepo.Login(request.Username, request.Password);
             if (id == null)
             {
-                return BadRequest();
+                //* A generic error message is better than saying the password is incorrect for security reasons.
+                return BadRequest("The username or password is incorrect.");
             }
             return Ok(id);
         }
 
+        //! Test
         [HttpPost("Register")]
         public async Task<ActionResult<int>> Register(UserDTO request)
         {

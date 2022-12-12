@@ -39,6 +39,17 @@ namespace ProjectCRUD.Services.AuthService
             return user.Id;
         }
 
+        //! Test
+        public async Task<bool> UserExists(string username)
+        {
+            if (await _context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<string?> Login(string username, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower().Equals(username.ToLower()));
@@ -65,17 +76,6 @@ namespace ProjectCRUD.Services.AuthService
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
-        }
-
-        //! Test
-        public async Task<bool> UserExists(string username)
-        {
-            if (await _context.Users.AnyAsync(x => x.Username.ToLower() == username.ToLower()))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
