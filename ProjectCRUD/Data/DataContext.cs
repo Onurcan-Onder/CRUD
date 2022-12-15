@@ -16,5 +16,6 @@ namespace ProjectCRUD.Data
         // Presentation of the table in the database
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<SkillLevel> SkillLevels { get; set; }
     }
 }

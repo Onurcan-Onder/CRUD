@@ -46,7 +46,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 dbEmployee.LastName = updatedEmployee.LastName;
                 dbEmployee.DoB = updatedEmployee.DoB;
                 dbEmployee.Email = updatedEmployee.Email;
-                dbEmployee.SkillLevelId = updatedEmployee.SkillLevelId;
+                dbEmployee.SkillLevel = updatedEmployee.SkillLevel;
                 dbEmployee.Active = updatedEmployee.Active;
                 dbEmployee.Age = updatedEmployee.Age;
 

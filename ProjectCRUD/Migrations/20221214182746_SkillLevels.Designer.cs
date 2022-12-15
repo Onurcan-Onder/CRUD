@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCRUD.Data;
 
@@ -10,9 +11,11 @@ using ProjectCRUD.Data;
 namespace ProjectCRUD.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221214182746_SkillLevels")]
+    partial class SkillLevels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -99,15 +102,10 @@ namespace ProjectCRUD.Migrations
             modelBuilder.Entity("ProjectCRUD.Models.Employee", b =>
                 {
                     b.HasOne("ProjectCRUD.Models.SkillLevel", "SkillLevel")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("SkillLevelId");
 
                     b.Navigation("SkillLevel");
-                });
-
-            modelBuilder.Entity("ProjectCRUD.Models.SkillLevel", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }
