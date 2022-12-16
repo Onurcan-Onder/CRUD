@@ -11,7 +11,7 @@ namespace ProjectCRUD.DTOs
         public string LastName { get; set; } = string.Empty;
         public DateTime DoB { get; set; }
         public string Email { get; set; } = string.Empty;
-        public int SkillLevelId { get; set; }
+        public int SkillLevel { get; set; }
         public bool Active { get; set; }
         public int Age { get; set; }
     }

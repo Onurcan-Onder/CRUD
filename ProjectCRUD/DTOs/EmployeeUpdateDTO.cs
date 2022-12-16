@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjectCRUD.Models
+namespace ProjectCRUD.DTOs
 {
-    public class Employee
+    public class EmployeeUpdateDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public DateTime DoB { get; set; }
         public string Email { get; set; } = string.Empty;
-        public EmployeeSkillLevel? SkillLevel { get; set; }
+        public int SkillLevel { get; set; }
         public bool Active { get; set; }
         public int Age { get; set; }
     }

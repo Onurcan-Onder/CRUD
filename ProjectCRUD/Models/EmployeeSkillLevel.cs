@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProjectCRUD.Models
 {
-    public class SkillLevel
+    public class EmployeeSkillLevel
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

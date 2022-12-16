@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCRUD.DTOs;
 using ProjectCRUD.Services.EmployeesService;
 
 namespace ProjectCRUD.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
@@ -33,13 +34,13 @@ namespace ProjectCRUD.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Employee>>> Add(Employee newEmployee)
+        public async Task<ActionResult<List<Employee>>> Add(EmployeeDTO newEmployeeDTO)
         {
-            return Ok(await _employeesService.AddEmployee(newEmployee));
+            return Ok(await _employeesService.AddEmployee(newEmployeeDTO));
         }
 
         [HttpPut]
-        public async Task<ActionResult<Employee>> Update(Employee? updatedEmployee)
+        public async Task<ActionResult<Employee>> Update(EmployeeUpdateDTO? updatedEmployee)
         {
             //! This does not return as null
             if (updatedEmployee == null)

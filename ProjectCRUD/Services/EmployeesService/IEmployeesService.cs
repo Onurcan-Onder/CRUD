@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectCRUD.DTOs;
 
 namespace ProjectCRUD.Services.EmployeesService
 {
@@ -9,8 +10,8 @@ namespace ProjectCRUD.Services.EmployeesService
     {
         Task<List<Employee>> GetAllEmployees();
         Task<Employee> GetEmployeeById(int EmployeeID);
-        Task<List<Employee>> AddEmployee(Employee newEmployee);
-        Task<Employee> UpdateEmployee(Employee updatedEmployee);
+        Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO);
+        Task<Employee> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO);
         Task<List<Employee>> DeleteEmployee(int EmployeeID);
     }
 }
