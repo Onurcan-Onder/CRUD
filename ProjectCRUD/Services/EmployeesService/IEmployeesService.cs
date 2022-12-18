@@ -11,7 +11,7 @@ namespace ProjectCRUD.Services.EmployeesService
         Task<List<Employee>> GetAllEmployees();
         Task<Employee?> GetEmployeeById(int EmployeeID);
         Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO);
-        Task<Employee?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO);
+        Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO);
         Task<List<Employee>?> DeleteEmployee(int EmployeeID);
     }
 }

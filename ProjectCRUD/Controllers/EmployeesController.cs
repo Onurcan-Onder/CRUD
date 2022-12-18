@@ -40,7 +40,7 @@ namespace ProjectCRUD.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Employee>> Update(EmployeeUpdateDTO? updatedEmployee)
+        public async Task<ActionResult<List<Employee>>> Update(EmployeeUpdateDTO? updatedEmployee)
         {
             //! This does not return as null
             if (updatedEmployee == null)

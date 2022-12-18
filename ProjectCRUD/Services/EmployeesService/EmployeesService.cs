@@ -49,7 +49,7 @@ namespace ProjectCRUD.Services.EmployeesService
             return dbEmployees;
         }
 
-        public async Task<Employee?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
+        public async Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
         {
             try
             {
@@ -65,8 +65,10 @@ namespace ProjectCRUD.Services.EmployeesService
                 dbEmployee.Age = updatedEmployeeDTO.Age;
 
                 await _context.SaveChangesAsync();
+
+                var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
                 
-                return dbEmployee;
+                return dbEmployees;
             }
             catch (System.Exception)
             {
