@@ -1,3 +1,5 @@
+<button (click)="createEmployee()">Create a New Employee</button>
+
 <table>
     <thead>
         <th>First Name</th>
@@ -17,6 +19,9 @@
             <td>{{ employee.skillLevel.id }}</td>
             <td>{{ employee.active }}</td>
             <td>{{ employee.age }}</td>
+            <td><button (click)="updateEmployee(employee)">Update</button></td>
         </tr>
     </tbody>
 </table>
+
+<app-update-employee [employee]="employeeToUpdate" (employeesUpdated)="updateEmployeeList($event)"></app-update-employee>

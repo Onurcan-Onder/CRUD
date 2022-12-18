@@ -8,9 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { EmployeesComponent } from './employees/employees.component';
 import { LoginComponent } from './login/login.component';
+import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
 
 @NgModule({
-  declarations: [AppComponent, EmployeesComponent, LoginComponent],
+  declarations: [AppComponent, EmployeesComponent, LoginComponent, UpdateEmployeeComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
     {
