@@ -10,7 +10,8 @@
     </div>
     <div>
         Date of Birth:
-        <input [(ngModel)]="employee.doB" placeholder="MM DD YYYY"/>
+        <!--<input type="text" placeholder="yyyy-MM-dd" [value]="employee.doB | date: 'yyyy-MM-dd'"/>-->
+        <input [(ngModel)]="employee.doB" placeholder="yyyy-MM-dd"/>
     </div>
     <div>
         Email:

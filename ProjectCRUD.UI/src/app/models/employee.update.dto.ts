@@ -1,10 +1,10 @@
-import { Skill } from "./skill";
+import { formatDate } from "@angular/common";
 
 export class EmployeeUpdateDTO {
     id?: number;
     firstName = "";
     lastName = "";
-    doB = new Date();
+    doB = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     email = "";
     skillLevel?: number;
     active = true;

@@ -20,6 +20,7 @@ namespace ProjectCRUD.Services.EmployeesService
         public async Task<List<Employee>> GetAllEmployees()
         {
             var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+
             return dbEmployees;
         }
 
@@ -46,6 +47,7 @@ namespace ProjectCRUD.Services.EmployeesService
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
             var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+
             return dbEmployees;
         }
 
@@ -67,7 +69,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 await _context.SaveChangesAsync();
 
                 var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
-                
+
                 return dbEmployees;
             }
             catch (System.Exception)
@@ -84,6 +86,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
                 var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+
                 return dbEmployees;
             }
             catch (System.Exception)
