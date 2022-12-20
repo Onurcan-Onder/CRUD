@@ -2,11 +2,11 @@
     <h2>{{ employee.firstName }}</h2>
     <div>
         First Name:
-        <input [(ngModel)]="employee.firstName" placeholder="First Name"/>
+        <input [(ngModel)]="employee.firstName" placeholder="First Name" required/>
     </div>
     <div>
         Last Name:
-        <input [(ngModel)]="employee.lastName" placeholder="Last Name"/>
+        <input [(ngModel)]="employee.lastName" placeholder="Last Name" required/>
     </div>
     <div>
         Date of Birth:
@@ -15,29 +15,31 @@
     </div>
     <div>
         Email:
-        <input [(ngModel)]="employee.email" placeholder="example@email.com"/>
+        <input [(ngModel)]="employee.email" placeholder="example@email.com" required/>
     </div>
     <div>
         Skill Level:
         <!--<input [(ngModel)]="employee.skillLevel.id" placeholder="Skill Level"/>-->
           <label for="1">1</label>
-          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="1" value="1" checked="checked">
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="1" value="1" name="1" checked="checked">
         |
           <label for="2">2</label>
-          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="2" value="2">
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="2" value="2" name="2">
         |
           <label for="3">3</label>
-          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="3" value="3">
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="3" value="3" name="3">
     </div>
     <div>
         Active:
         <!--<input [(ngModel)]="employee.active" placeholder="true or false"/>-->
         <input type="checkbox" [(ngModel)]="employee.active"/>
     </div>
+    <!--
     <div>
         Age:
         <input [(ngModel)]="employee.age" placeholder="Age"/>
     </div>
+    -->
     <button (click)="updateEmployee(employee)" *ngIf="employee.id">Update</button>
     <button (click)="deleteEmployee(employee)" *ngIf="employee.id">Delete</button>
     <button (click)="createEmployee(employee)" *ngIf="!employee.id">Create</button>

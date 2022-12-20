@@ -27,7 +27,7 @@ export class UpdateEmployeeComponent implements OnInit {
     employeeUpdateDTO.email = employee.email;
     employeeUpdateDTO.skillLevel = employee.skillLevel.id;
     employeeUpdateDTO.active = employee.active;
-    employeeUpdateDTO.age = employee.age;
+    //employeeUpdateDTO.age = employee.age;
 
     this.crudService
       .updateEmployee(employeeUpdateDTO)
@@ -48,7 +48,7 @@ export class UpdateEmployeeComponent implements OnInit {
     employeeDTO.email = employee.email;
     employeeDTO.skillLevel = employee.skillLevel.id;
     employeeDTO.active = employee.active;
-    employeeDTO.age = employee.age;
+    //employeeDTO.age = employee.age;
 
     this.crudService
       .createEmployee(employeeDTO)

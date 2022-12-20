@@ -8,5 +8,4 @@ export class EmployeeUpdateDTO {
     email = "";
     skillLevel?: number;
     active = true;
-    age?: number;
   }  
