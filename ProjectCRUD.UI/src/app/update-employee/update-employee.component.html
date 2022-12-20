@@ -1,4 +1,4 @@
-<div *ngIf="employee">
+<div *ngIf="employee" class="content-form">
     <h2>{{ employee.firstName }}</h2>
     <div>
         First Name:
@@ -11,7 +11,7 @@
     <div>
         Date of Birth:
         <!--<input type="text" placeholder="yyyy-MM-dd" [value]="employee.doB | date: 'yyyy-MM-dd'"/>-->
-        <input [(ngModel)]="employee.doB" placeholder="yyyy-MM-dd"/>
+        <input type="date" [(ngModel)]="employee.doB" placeholder="yyyy-MM-dd"/>
     </div>
     <div>
         Email:
@@ -19,11 +19,20 @@
     </div>
     <div>
         Skill Level:
-        <input [(ngModel)]="employee.skillLevel.id" placeholder="Skill Level"/>
+        <!--<input [(ngModel)]="employee.skillLevel.id" placeholder="Skill Level"/>-->
+          <label for="1">1</label>
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="1" value="1" checked="checked">
+        |
+          <label for="2">2</label>
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="2" value="2">
+        |
+          <label for="3">3</label>
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="3" value="3">
     </div>
     <div>
         Active:
-        <input [(ngModel)]="employee.active" placeholder="true or false"/>
+        <!--<input [(ngModel)]="employee.active" placeholder="true or false"/>-->
+        <input type="checkbox" [(ngModel)]="employee.active"/>
     </div>
     <div>
         Age:

@@ -6,7 +6,8 @@
         <th>Last Name</th>
         <th>Date of Birth</th>
         <th>Email</th>
-        <th>Skill Level</th>
+        <th>Skill Name</th>
+        <th>Skill Description</th>
         <th>Active</th>
         <th>Age</th>
         <th></th>
@@ -17,7 +18,8 @@
             <td>{{ employee.lastName }}</td>
             <td>{{ employee.doB | date:'yyyy-MM-dd' }}</td>
             <td>{{ employee.email }}</td>
-            <td>{{ employee.skillLevel.id }}</td>
+            <td>{{ employee.skillLevel.name }}</td>
+            <td>{{ employee.skillLevel.description }}</td>
             <td>{{ employee.active }}</td>
             <td>{{ employee.age }}</td>
             <td><button (click)="updateEmployee(employee)">Edit</button></td>

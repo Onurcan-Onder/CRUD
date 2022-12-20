@@ -1,0 +1,9 @@
+.content-form{
+    font-family: sans-serif;
+}
+
+.content-form * {
+    box-sizing: border-box;
+    line-height: 1.5;
+    padding: 3px;
+}
