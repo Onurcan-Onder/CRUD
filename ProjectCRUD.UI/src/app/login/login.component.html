@@ -5,8 +5,11 @@
   <div>
     Password:
     <input [(ngModel)]="user.password" placeholder="Password" type="password">
-  </div>
+</div>
   <button (click)="login(user)">Login</button>
+<div *ngIf="error">
+  <div class="alter alert-danger">{{"The username or password is incorrect."}}</div>
+</div>
   <!--
   <button (click)="get('Employees')">Employees</button>
   -->

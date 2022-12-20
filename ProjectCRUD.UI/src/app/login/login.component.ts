@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   title = 'ProjectCRUD.UI';
   user = new User();
+  error = null;
 
   constructor(private authService: AuthService, private router:Router) {}
 
@@ -23,6 +24,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(user).subscribe((token: string) => {
       localStorage.setItem('authToken', token);
       this.router.navigate(["Employees"]);
+    }, error => {
+      this.error = error.message;
     });
   }
 

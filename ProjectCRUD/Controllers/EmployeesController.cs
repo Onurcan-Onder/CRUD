@@ -9,7 +9,7 @@ using ProjectCRUD.Services.EmployeesService;
 
 namespace ProjectCRUD.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase

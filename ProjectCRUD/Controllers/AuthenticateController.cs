@@ -26,7 +26,7 @@ namespace ProjectCRUD.Controllers
             if (id == null)
             {
                 //* A generic error message is better than saying the password is incorrect for security reasons.
-                return BadRequest("The username or password is incorrect.");
+                return Unauthorized("The username or password is incorrect.");
             }
             return Ok(id);
         }
