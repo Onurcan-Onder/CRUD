@@ -28,7 +28,7 @@ namespace ProjectCRUD.Controllers
         }
 
         [HttpGet("{EmployeeID}")]
-        public async Task<ActionResult<Employee>> GetById(int EmployeeID)
+        public async Task<ActionResult<Employee>> GetById(Guid EmployeeID)
         {
             return Ok(await _employeesService.GetEmployeeById(EmployeeID));
         }
@@ -42,7 +42,6 @@ namespace ProjectCRUD.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Employee>>> Update(EmployeeUpdateDTO? updatedEmployee)
         {
-            //! This does not return as null
             if (updatedEmployee == null)
             {
                 return NotFound();
@@ -51,7 +50,7 @@ namespace ProjectCRUD.Controllers
         }
 
         [HttpDelete("{EmployeeID}")]
-        public async Task<ActionResult<Employee>> Delete(int EmployeeID)
+        public async Task<ActionResult<Employee>> Delete(Guid EmployeeID)
         {
             var response = await _employeesService.DeleteEmployee(EmployeeID);
             

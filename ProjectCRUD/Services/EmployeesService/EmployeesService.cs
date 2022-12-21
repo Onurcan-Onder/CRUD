@@ -24,7 +24,7 @@ namespace ProjectCRUD.Services.EmployeesService
             return dbEmployees;
         }
 
-        public async Task<Employee?> GetEmployeeById(int EmployeeID)
+        public async Task<Employee?> GetEmployeeById(Guid EmployeeID)
         {
             var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == EmployeeID);
             return dbEmployee;
@@ -78,7 +78,7 @@ namespace ProjectCRUD.Services.EmployeesService
             }
         }
 
-        public async Task<List<Employee>?> DeleteEmployee(int EmployeeID)
+        public async Task<List<Employee>?> DeleteEmployee(Guid EmployeeID)
         {
             try
             {

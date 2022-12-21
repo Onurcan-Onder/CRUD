@@ -40,7 +40,7 @@
         <input [(ngModel)]="employee.age" placeholder="Age"/>
     </div>
     -->
-    <button (click)="updateEmployee(employee)" *ngIf="employee.id">Update</button>
-    <button (click)="deleteEmployee(employee)" *ngIf="employee.id" onclick="window.location.reload();" >Delete</button>
+    <button (click)="updateEmployee(employee)" *ngIf="employee.id" onclick="window.location.reload();">Update</button>
+    <button (click)="deleteEmployee(employee)" *ngIf="employee.id" onclick="window.location.reload();">Delete</button>
     <button (click)="createEmployee(employee)" *ngIf="!employee.id">Create</button>
 </div>

@@ -9,9 +9,9 @@ namespace ProjectCRUD.Services.EmployeesService
     public interface IEmployeesService
     {
         Task<List<Employee>> GetAllEmployees();
-        Task<Employee?> GetEmployeeById(int EmployeeID);
+        Task<Employee?> GetEmployeeById(Guid EmployeeID);
         Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO);
         Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO);
-        Task<List<Employee>?> DeleteEmployee(int EmployeeID);
+        Task<List<Employee>?> DeleteEmployee(Guid EmployeeID);
     }
 }

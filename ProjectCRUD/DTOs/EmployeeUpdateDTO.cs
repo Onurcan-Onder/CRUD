@@ -9,7 +9,7 @@ namespace ProjectCRUD.DTOs
 {
     public class EmployeeUpdateDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = "Name";
         public string LastName { get; set; } = "Surname";
         [DataType(DataType.Date)]
