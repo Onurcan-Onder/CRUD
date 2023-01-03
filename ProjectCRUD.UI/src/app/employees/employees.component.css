@@ -1,3 +1,12 @@
+.header {
+    text-align: center;
+  }
+
+.content {
+  margin: auto;
+  width: 50%;
+}
+
 .content-table{
     border-collapse: collapse;
     margin: 25px 0;
@@ -9,10 +18,10 @@
 }
 
 .content-table thead th {
-    background-color:rgb(69, 163, 221) ;
+    background-color:#4186bb;
     color: white;
     text-align: left;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .content-table th,
@@ -29,5 +38,9 @@
 }
 
 .content-table tbody tr:last-of-type{
-    border-bottom: 2px solid rgb(69, 163, 221);
+    border-bottom: 2px solid #4186bb;
+}
+
+.create-button{
+    padding: 5px;
 }

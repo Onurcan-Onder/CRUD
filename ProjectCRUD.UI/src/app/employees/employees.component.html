@@ -1,30 +1,38 @@
-<button (click)="createEmployee()">Create a New Employee</button>
+<div class="header">
+<img src="../assets/KaseyaLogoSmall.png" alt="KaseyaLogo">
+</div>
 
-<table class="content-table">
-    <thead>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Date of Birth</th>
-        <th>Email</th>
-        <th>Skill Name</th>
-        <th>Skill Description</th>
-        <th>Active</th>
-        <th>Age</th>
-        <th></th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let employee of employees">
-            <td>{{ employee.firstName }}</td>
-            <td>{{ employee.lastName }}</td>
-            <td>{{ employee.doB | date:'yyyy-MM-dd' }}</td>
-            <td>{{ employee.email }}</td>
-            <td>{{ employee.skillLevel.name }}</td>
-            <td>{{ employee.skillLevel.description }}</td>
-            <td>{{ employee.active }}</td>
-            <td>{{ employee.age }}</td>
-            <td><button (click)="updateEmployee(employee)">Edit</button></td>
-        </tr>
-    </tbody>
-</table>
+<div class="content">
+    <div class="create-button">
+    <button (click)="createEmployee()">Create a New Employee</button>
+    </div>
+
+    <table class="content-table">
+        <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Email</th>
+            <th>Skill Name</th>
+            <th>Skill Description</th>
+            <th>Active</th>
+            <th>Age</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{ employee.firstName }}</td>
+                <td>{{ employee.lastName }}</td>
+                <td>{{ employee.doB | date:'yyyy-MM-dd' }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.skillLevel.name }}</td>
+                <td>{{ employee.skillLevel.description }}</td>
+                <td>{{ employee.active }}</td>
+                <td>{{ employee.age }}</td>
+                <td><button (click)="updateEmployee(employee)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <app-update-employee [employee]="employeeToUpdate" (employeesUpdated)="updateEmployeeList($event)"></app-update-employee>

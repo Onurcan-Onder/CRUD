@@ -1,5 +1,7 @@
 .content-form{
     font-family: sans-serif;
+    margin: auto;
+    width: 50%;
 }
 
 .content-form * {
