@@ -1,15 +1,22 @@
-<div>
-    Name:
-    <input [(ngModel)]="user.username" placeholder="Name">
+<div class="main-elements">
+  <div *ngIf="error">
+    <div class="alter-container">
+      <div class="error-message">{{"The username or password is incorrect."}}</div>
+    </div>
   </div>
-  <div>
-    Password:
-    <input [(ngModel)]="user.password" placeholder="Password" type="password">
+  <div class="login-elements">
+    <div class="username">
+      Name:
+      <br>
+      <input [(ngModel)]="user.username" placeholder="Name">
+    </div>
+    <div class="password">
+      Password:
+      <br>
+      <input [(ngModel)]="user.password" placeholder="Password" type="password">
+    </div>
+    <div class="login-button">
+      <button (click)="login(user)">Login</button>
+    </div>
+  </div>
 </div>
-  <button (click)="login(user)">Login</button>
-<div *ngIf="error">
-  <div class="alter alert-danger">{{"The username or password is incorrect."}}</div>
-</div>
-  <!--
-  <button (click)="get('Employees')">Employees</button>
-  -->
