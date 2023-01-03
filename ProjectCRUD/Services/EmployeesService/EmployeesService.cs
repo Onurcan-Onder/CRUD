@@ -34,6 +34,10 @@ namespace ProjectCRUD.Services.EmployeesService
         {
             var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
 
+                var today = DateTime.Today;
+                var age = today.Year - newEmployeeDTO.DoB.Year;
+                if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
+
             var newEmployee = new Employee {
                 FirstName = newEmployeeDTO.FirstName,
                 LastName = newEmployeeDTO.LastName,
@@ -41,7 +45,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 Email = newEmployeeDTO.Email,
                 SkillLevel = skillLevel,
                 Active = newEmployeeDTO.Active,
-                Age = DateTime.Today.Year - newEmployeeDTO.DoB.Year
+                Age = age
             };
 
             _context.Employees.Add(newEmployee);
@@ -64,7 +68,11 @@ namespace ProjectCRUD.Services.EmployeesService
                 dbEmployee.Email = updatedEmployeeDTO.Email;
                 dbEmployee.SkillLevel = skillLevel;
                 dbEmployee.Active = updatedEmployeeDTO.Active;
-                dbEmployee.Age = DateTime.Today.Year - updatedEmployeeDTO.DoB.Year;
+                
+                var today = DateTime.Today;
+                var age = today.Year - updatedEmployeeDTO.DoB.Year;
+                if (updatedEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
+                dbEmployee.Age = age;
 
                 await _context.SaveChangesAsync();
 
