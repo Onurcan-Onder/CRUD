@@ -17,7 +17,10 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router:Router) {}
 
   ngOnInit(): void {
-    //throw new Error('Method not implemented.');
+    //* If I have a valid token, then forward me to the employees table directly
+    if (localStorage.getItem('authToken')!= null) {
+      this.router.navigate(["Employees"]);
+    }
   }
 
   login(user: User) {

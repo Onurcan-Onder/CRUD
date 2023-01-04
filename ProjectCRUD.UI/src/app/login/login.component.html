@@ -13,14 +13,10 @@
   <div class="login-elements">
     <img src="../assets/KaseyaLogoSmall.png" alt="KaseyaLogo">
     <div class="username">
-      Name:
-      <br>
-      <input [(ngModel)]="user.username" placeholder="Name">
+      <input class="textbox" [(ngModel)]="user.username" placeholder="Name">
     </div>
     <div class="password">
-      Password:
-      <br>
-      <input [(ngModel)]="user.password" placeholder="Password" type="password">
+      <input class="textbox" [(ngModel)]="user.password" placeholder="Password" type="password">
     </div>
     <div class="login-button">
       <button (click)="login(user)">Login</button>

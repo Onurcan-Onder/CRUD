@@ -8,20 +8,25 @@
   }
 */
 
+.textbox{
+  padding:10px;
+  border:0;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  border-radius:4px;
+  width: 90%;
+}
+
 .main-elements{
   margin: auto;
   width: 50%;
   min-width: 300px;
-  /*
-  border: 3px solid #0e6cb6;
-  */
   padding: 10px;
 }
 
 .login-elements{
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 50%;
   min-width: 300px;
   height: 250px;
   margin: 20px auto;
@@ -37,19 +42,39 @@
     width: 50%;
 }
 .password {
-    margin: auto;
-    width: 50%;
+  margin: auto;
+  width: 50%;
 }
 
 .login-button {
-    margin: auto;
-    width: 50%;
-    padding: 15px;
+  margin: auto;
+  width: 50%;
+  padding: 15px;
+}
+
+button{
+  /* remove default behavior */
+  appearance:none;
+  -webkit-appearance:none;
+
+  padding:10px;
+  border:none;
+  background-color:#00558B;
+  color:#fff;
+  font-weight:600;
+  border-radius:5px;
+  width:100%;
+}
+
+button:active {
+  background-color: #4186bb;
 }
 
 .error-message{
+    font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-align: center;
+    font-weight: normal;
 }
 
 .alter-container{
