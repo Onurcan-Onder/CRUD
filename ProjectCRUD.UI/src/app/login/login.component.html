@@ -3,6 +3,13 @@
   <p>CRUD Project - Onurcan Onder</p>
 </div>
 -->
+
+<html>
+  <head>
+    <title>HTML Elements Reference</title>
+  </head>
+</html>
+
 <div class="main-elements">
   <div *ngIf="error">
     <div class="alter-container">
@@ -13,13 +20,13 @@
   <div class="login-elements">
     <img src="../assets/KaseyaLogoSmall.png" alt="KaseyaLogo">
     <div class="username">
-      <input class="textbox" [(ngModel)]="user.username" placeholder="Name">
+      <input class="textbox" [(ngModel)]="user.username" placeholder="Name" name="username">
     </div>
     <div class="password">
-      <input class="textbox" [(ngModel)]="user.password" placeholder="Password" type="password">
+      <input class="textbox" [(ngModel)]="user.password" placeholder="Password" type="password" name="password">
     </div>
     <div class="login-button">
-      <button (click)="login(user)">Login</button>
+      <button (click)="login(user)" name="login-button">Login</button>
     </div>
   </div>
 </div>
