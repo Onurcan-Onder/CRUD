@@ -18,14 +18,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     //* If I have a valid token, then forward me to the employees table directly
-    if (localStorage.getItem('authToken')!= null) {
+    if (sessionStorage.getItem('authToken')!= null) {
       this.router.navigate(["Employees"]);
     }
   }
 
   login(user: User) {
     this.authService.login(user).subscribe((token: string) => {
-      localStorage.setItem('authToken', token);
+      sessionStorage.setItem('authToken', token);
       this.router.navigate(["Employees"]);
     }, error => {
       this.error = error.message;

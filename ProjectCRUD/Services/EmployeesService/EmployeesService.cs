@@ -24,6 +24,7 @@ namespace ProjectCRUD.Services.EmployeesService
             return dbEmployees;
         }
 
+        //! Test
         public async Task<Employee?> GetEmployeeById(Guid EmployeeID)
         {
             var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == EmployeeID);

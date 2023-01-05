@@ -2,11 +2,11 @@
     <h2>{{ employee.firstName }}</h2>
     <div>
         First Name:
-        <input [(ngModel)]="employee.firstName" placeholder="First Name" required/>
+        <input [(ngModel)]="employee.firstName" placeholder="First Name" maxlength="15" required/>
     </div>
     <div>
         Last Name:
-        <input [(ngModel)]="employee.lastName" placeholder="Last Name" required/>
+        <input [(ngModel)]="employee.lastName" placeholder="Last Name" maxlength="15" required/>
     </div>
     <div>
         Date of Birth:
@@ -15,13 +15,13 @@
     </div>
     <div>
         Email:
-        <input [(ngModel)]="employee.email" placeholder="example@email.com" required/>
+        <input [(ngModel)]="employee.email" placeholder="example@email.com" maxlength="100" required/>
     </div>
     <div>
         Skill Level:
         <!--<input [(ngModel)]="employee.skillLevel.id" placeholder="Skill Level"/>-->
           <label for="1">1</label>
-          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="1" value="1" name="1"/>
+          <input [(ngModel)]="employee.skillLevel.id" type="radio" id="1" value="1" name="1" checked/>
         |
           <label for="2">2</label>
           <input [(ngModel)]="employee.skillLevel.id" type="radio" id="2" value="2" name="2"/>
