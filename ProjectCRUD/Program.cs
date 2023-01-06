@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectCRUD.Data;
 using ProjectCRUD.Services.AuthService;
+using ProjectCRUD.Services.CacheService;
 using ProjectCRUD.Services.EmployeesService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 
 builder.Services.AddDbContext<DataContext>(options =>
     {

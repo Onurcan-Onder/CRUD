@@ -5,23 +5,36 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjectCRUD.Data;
 using ProjectCRUD.DTOs;
+using ProjectCRUD.Services.CacheService;
 
 namespace ProjectCRUD.Services.EmployeesService
 {
     public class EmployeesService : IEmployeesService
     {
         private readonly DataContext _context;
+        private readonly ICacheService _cacheService;
 
-        public EmployeesService(DataContext context)
+        public EmployeesService(DataContext context, ICacheService cacheService)
         {
             _context = context;
+            _cacheService = cacheService;
         }
 
         public async Task<List<Employee>> GetAllEmployees()
         {
-            var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+            //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
 
-            return dbEmployees;
+            //* Caching
+            var cacheData = _cacheService.GetData();
+
+            if (cacheData != null && cacheData.Count() > 0)
+                return cacheData;
+
+            cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+            var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+            _cacheService.SetData(cacheData, expiryTime);
+            return cacheData;
+            //* Caching
         }
 
         //! Test
@@ -35,9 +48,9 @@ namespace ProjectCRUD.Services.EmployeesService
         {
             var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
 
-                var today = DateTime.Today;
-                var age = today.Year - newEmployeeDTO.DoB.Year;
-                if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
+            var today = DateTime.Today;
+            var age = today.Year - newEmployeeDTO.DoB.Year;
+            if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
 
             var newEmployee = new Employee {
                 FirstName = newEmployeeDTO.FirstName,
@@ -49,11 +62,17 @@ namespace ProjectCRUD.Services.EmployeesService
                 Age = age
             };
 
-            _context.Employees.Add(newEmployee);
+            var addedEmployee = _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
-            var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
 
-            return dbEmployees;
+            //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+            
+            //* Caching
+            var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+            var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+            _cacheService.SetData(cacheData, expiryTime);
+            return cacheData;
+            //* Caching
         }
 
         public async Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
@@ -77,9 +96,14 @@ namespace ProjectCRUD.Services.EmployeesService
 
                 await _context.SaveChangesAsync();
 
-                var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
 
-                return dbEmployees;
+                //* Caching
+                var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+                _cacheService.SetData(cacheData, expiryTime);
+                return cacheData;
+                //* Caching
             }
             catch (System.Exception)
             {
@@ -94,9 +118,13 @@ namespace ProjectCRUD.Services.EmployeesService
                 Employee employee = await _context.Employees.Include(s => s.SkillLevel).FirstAsync(e => e.Id == EmployeeID);
                 _context.Employees.Remove(employee);
                 await _context.SaveChangesAsync();
-                var dbEmployees = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
 
-                return dbEmployees;
+                //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+
+                //* Caching
+                var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+                return _cacheService.RemoveData(employee, expiryTime);
+                //* Caching
             }
             catch (System.Exception)
             {
