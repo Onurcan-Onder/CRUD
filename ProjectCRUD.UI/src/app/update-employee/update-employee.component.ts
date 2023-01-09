@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Guid } from 'guid-typescript';
 import { EmployeeDTO } from '../models/employe.dto';
 import { Employee } from '../models/employee';
 import { EmployeeUpdateDTO } from '../models/employee.update.dto';
@@ -27,7 +28,6 @@ export class UpdateEmployeeComponent implements OnInit {
     employeeUpdateDTO.email = employee.email;
     employeeUpdateDTO.skillLevel = employee.skillLevel.id;
     employeeUpdateDTO.active = employee.active;
-    //employeeUpdateDTO.age = employee.age;
 
     this.crudService
       .updateEmployee(employeeUpdateDTO)
@@ -48,11 +48,17 @@ export class UpdateEmployeeComponent implements OnInit {
     employeeDTO.email = employee.email;
     employeeDTO.skillLevel = employee.skillLevel.id;
     employeeDTO.active = employee.active;
-    //employeeDTO.age = employee.age;
 
     this.crudService
       .createEmployee(employeeDTO)
+      //.subscribe((id: Guid) => id);
       .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+    
+    /*
+    this.crudService
+      .getEmployees()
+      .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+    */
   }
 
 }

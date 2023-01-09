@@ -59,6 +59,11 @@ namespace ProjectCRUD.Controllers
                 return NotFound();
             }
             return Ok(response);
+            
+            /*
+            await _employeesService.DeleteEmployee(EmployeeID);
+            return Ok();
+            */
         }
     }
 }

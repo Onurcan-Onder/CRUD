@@ -3,6 +3,7 @@ import { EmployeeDTO } from '../models/employe.dto';
 import { Employee } from '../models/employee';
 import { EmployeeUpdateDTO } from '../models/employee.update.dto';
 import { CrudService } from '../services/crud.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -14,12 +15,18 @@ export class EmployeesComponent implements OnInit {
   employees: Employee[] = [];
   employeeToUpdate?: Employee;
 
-  constructor(private crudService: CrudService) { }
+  constructor(private crudService: CrudService, private router:Router) { }
 
   ngOnInit(): void {
-    this.crudService
+    //* If I don't have a valid token, then forward me to login
+    if (sessionStorage.getItem('authToken')== null) {
+      this.router.navigate(["Login"]);
+    }
+    else{
+      this.crudService
       .getEmployees()
       .subscribe((result: Employee[]) => (this.employees = result));
+    }
   }
 
   updateEmployeeList(employees: Employee[]) {

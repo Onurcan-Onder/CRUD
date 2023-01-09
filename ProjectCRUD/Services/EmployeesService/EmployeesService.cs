@@ -34,7 +34,6 @@ namespace ProjectCRUD.Services.EmployeesService
             var expiryTime = DateTimeOffset.Now.AddSeconds(30);
             _cacheService.SetData(cacheData, expiryTime);
             return cacheData;
-            //* Caching
         }
 
         //! Test
@@ -45,6 +44,7 @@ namespace ProjectCRUD.Services.EmployeesService
         }
 
         public async Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO)
+        //public async Task<Guid> AddEmployee(EmployeeDTO newEmployeeDTO)
         {
             var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
 
@@ -72,10 +72,11 @@ namespace ProjectCRUD.Services.EmployeesService
             var expiryTime = DateTimeOffset.Now.AddSeconds(30);
             _cacheService.SetData(cacheData, expiryTime);
             return cacheData;
-            //* Caching
+            //return addedEmployee.Entity.Id;
         }
 
         public async Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
+        //public async Task<Employee?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
         {
             try
             {
@@ -84,7 +85,7 @@ namespace ProjectCRUD.Services.EmployeesService
 
                 dbEmployee.FirstName = updatedEmployeeDTO.FirstName;
                 dbEmployee.LastName = updatedEmployeeDTO.LastName;
-                dbEmployee.DoB = updatedEmployeeDTO.DoB;
+                dbEmployee.DoB = updatedEmployeeDTO.DoB;    
                 dbEmployee.Email = updatedEmployeeDTO.Email;
                 dbEmployee.SkillLevel = skillLevel;
                 dbEmployee.Active = updatedEmployeeDTO.Active;
@@ -103,7 +104,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 var expiryTime = DateTimeOffset.Now.AddSeconds(30);
                 _cacheService.SetData(cacheData, expiryTime);
                 return cacheData;
-                //* Caching
+                //return dbEmployee;
             }
             catch (System.Exception)
             {
@@ -112,6 +113,7 @@ namespace ProjectCRUD.Services.EmployeesService
         }
 
         public async Task<List<Employee>?> DeleteEmployee(Guid EmployeeID)
+        //public async Task DeleteEmployee(Guid EmployeeID)
         {
             try
             {
@@ -124,7 +126,7 @@ namespace ProjectCRUD.Services.EmployeesService
                 //* Caching
                 var expiryTime = DateTimeOffset.Now.AddSeconds(30);
                 return _cacheService.RemoveData(employee, expiryTime);
-                //* Caching
+                //_cacheService.RemoveData(employee, expiryTime);
             }
             catch (System.Exception)
             {

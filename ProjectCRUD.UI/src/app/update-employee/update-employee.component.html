@@ -31,19 +31,14 @@
     </div>
     <div>
         Active:
-        <!--<input [(ngModel)]="employee.active" placeholder="true or false"/>-->
         <input type="checkbox" [(ngModel)]="employee.active"/>
     </div>
-    <!--
-    <div>
-        Age:
-        <input [(ngModel)]="employee.age" placeholder="Age"/>
-    </div>
-    -->
+
     <button (click)="updateEmployee(employee)" *ngIf="employee.id">Update</button>
     <button (click)="deleteEmployee(employee)" *ngIf="employee.id" onclick="window.location.reload();">Delete</button>
     <!--
     <button (click)="deleteEmployee(employee)" *ngIf="employee.id">Delete</button>
     -->
-    <button (click)="createEmployee(employee)" *ngIf="!employee.id">Create</button>
+    <button (click)="createEmployee(employee)" *ngIf="!employee.id" onclick='$(content-form).hide()'>Create</button>
+    
 </div>
