@@ -1,4 +1,4 @@
-<div *ngIf="employee" class="content-form">
+<div *ngIf="employee && classReference.flag" class="content-form">
     <h2>{{ employee.firstName }}</h2>
     <div>
         First Name:
@@ -35,10 +35,6 @@
     </div>
 
     <button (click)="updateEmployee(employee)" *ngIf="employee.id">Update</button>
-    <button (click)="deleteEmployee(employee)" *ngIf="employee.id" onclick="window.location.reload();">Delete</button>
-    <!--
     <button (click)="deleteEmployee(employee)" *ngIf="employee.id">Delete</button>
-    -->
-    <button (click)="createEmployee(employee)" *ngIf="!employee.id" onclick='$(content-form).hide()'>Create</button>
-    
+    <button (click)="createEmployee(employee)" *ngIf="!employee.id">Create</button>
 </div>

@@ -4,6 +4,7 @@ import { Employee } from '../models/employee';
 import { EmployeeUpdateDTO } from '../models/employee.update.dto';
 import { CrudService } from '../services/crud.service';
 import { Router } from '@angular/router';
+import { UpdateEmployeeComponent } from "../update-employee/update-employee.component";
 
 @Component({
   selector: 'app-employees',
@@ -35,11 +36,13 @@ export class EmployeesComponent implements OnInit {
 
   createEmployee()
   {
+    UpdateEmployeeComponent.flag = true;
     this.employeeToUpdate = new Employee();
   }
 
   updateEmployee(employe: Employee)
   {
+    UpdateEmployeeComponent.flag = true;
     this.employeeToUpdate = employe;
   }
 }

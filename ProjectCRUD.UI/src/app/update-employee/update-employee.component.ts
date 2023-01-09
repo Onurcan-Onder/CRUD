@@ -13,13 +13,18 @@ export class UpdateEmployeeComponent implements OnInit {
   @Input() employee?: Employee;
   @Output() employeesUpdated = new EventEmitter<Employee[]>();
 
-  constructor(private crudService: CrudService) { }
+  static flag: boolean;
+  public classReference = UpdateEmployeeComponent;
+
+  constructor(private crudService: CrudService) {
+    this.classReference.flag = true;
+  }
 
   ngOnInit(): void {
   }
 
   updateEmployee(employee:Employee) {
-
+    
     var employeeUpdateDTO: EmployeeUpdateDTO = new EmployeeUpdateDTO();
     employeeUpdateDTO.id = employee.id;
     employeeUpdateDTO.firstName = employee.firstName;
@@ -32,12 +37,18 @@ export class UpdateEmployeeComponent implements OnInit {
     this.crudService
       .updateEmployee(employeeUpdateDTO)
       .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+    
+      this.classReference.flag = false;
   }
 
   deleteEmployee(employee:Employee) {
-    this.crudService
-      .deleteEmployee(employee)
-      .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));   
+    if(confirm("Are you sure to delete "+ employee.firstName + "?")) {
+      this.crudService
+        .deleteEmployee(employee)
+        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+      //window.location.reload();
+      this.classReference.flag = false;
+    }
   }
 
   createEmployee(employee:Employee) {
@@ -59,6 +70,7 @@ export class UpdateEmployeeComponent implements OnInit {
       .getEmployees()
       .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
     */
-  }
 
+    this.classReference.flag = false;
+  }
 }
