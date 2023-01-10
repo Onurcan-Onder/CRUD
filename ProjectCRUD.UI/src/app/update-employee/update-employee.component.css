@@ -9,3 +9,11 @@
     line-height: 1.5;
     padding: 3px;
 }
+
+.text-box {
+    border: 1px solid red;
+}
+
+.error-message {
+    color: red;
+}

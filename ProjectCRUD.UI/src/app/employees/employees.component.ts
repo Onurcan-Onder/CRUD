@@ -37,12 +37,14 @@ export class EmployeesComponent implements OnInit {
   createEmployee()
   {
     UpdateEmployeeComponent.flag = true;
+    UpdateEmployeeComponent.resetErrors();
     this.employeeToUpdate = new Employee();
   }
 
   updateEmployee(employe: Employee)
   {
     UpdateEmployeeComponent.flag = true;
+    UpdateEmployeeComponent.resetErrors();
     this.employeeToUpdate = employe;
   }
 }

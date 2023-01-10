@@ -16,6 +16,13 @@ export class UpdateEmployeeComponent implements OnInit {
   static flag: boolean;
   public classReference = UpdateEmployeeComponent;
 
+  static firstNameError: boolean;
+  static lastNameError: boolean;
+  static emailError: boolean;
+
+  emailRegEx: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+  static emailRegEx: any;
+
   constructor(private crudService: CrudService) {
     this.classReference.flag = true;
   }
@@ -24,21 +31,24 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   updateEmployee(employee:Employee) {
-    
-    var employeeUpdateDTO: EmployeeUpdateDTO = new EmployeeUpdateDTO();
-    employeeUpdateDTO.id = employee.id;
-    employeeUpdateDTO.firstName = employee.firstName;
-    employeeUpdateDTO.lastName = employee.lastName;
-    employeeUpdateDTO.doB = employee.doB;
-    employeeUpdateDTO.email = employee.email;
-    employeeUpdateDTO.skillLevel = employee.skillLevel.id;
-    employeeUpdateDTO.active = employee.active;
 
-    this.crudService
-      .updateEmployee(employeeUpdateDTO)
-      .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-    
+    if (this.validInput(employee)) {
+      var employeeUpdateDTO: EmployeeUpdateDTO = new EmployeeUpdateDTO();
+      employeeUpdateDTO.id = employee.id;
+      employeeUpdateDTO.firstName = employee.firstName;
+      employeeUpdateDTO.lastName = employee.lastName;
+      employeeUpdateDTO.doB = employee.doB;
+      employeeUpdateDTO.email = employee.email;
+      employeeUpdateDTO.skillLevel = employee.skillLevel.id;
+      employeeUpdateDTO.active = employee.active;
+
+      this.crudService
+        .updateEmployee(employeeUpdateDTO)
+        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+      
       this.classReference.flag = false;
+    }
+
   }
 
   deleteEmployee(employee:Employee) {
@@ -52,25 +62,58 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   createEmployee(employee:Employee) {
-    var employeeDTO: EmployeeDTO = new EmployeeDTO();
-    employeeDTO.firstName = employee.firstName;
-    employeeDTO.lastName = employee.lastName;
-    employeeDTO.doB = employee.doB;
-    employeeDTO.email = employee.email;
-    employeeDTO.skillLevel = employee.skillLevel.id;
-    employeeDTO.active = employee.active;
 
-    this.crudService
-      .createEmployee(employeeDTO)
-      //.subscribe((id: Guid) => id);
-      .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+    if (this.validInput(employee)) {
+      var employeeDTO: EmployeeDTO = new EmployeeDTO();
+      employeeDTO.firstName = employee.firstName;
+      employeeDTO.lastName = employee.lastName;
+      employeeDTO.doB = employee.doB;
+      employeeDTO.email = employee.email;
+      employeeDTO.skillLevel = employee.skillLevel.id;
+      employeeDTO.active = employee.active;
+
+      this.crudService
+        .createEmployee(employeeDTO)
+        //.subscribe((id: Guid) => id);
+        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+      
+      /*
+      this.crudService
+        .getEmployees()
+        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+      */
+
+      this.classReference.flag = false;    
+    }
     
-    /*
-    this.crudService
-      .getEmployees()
-      .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-    */
+  }
 
-    this.classReference.flag = false;
+  validInput(employee: Employee)
+  {
+    var validInput = true;
+    UpdateEmployeeComponent.resetErrors();
+
+    if (employee.firstName == '') {
+      validInput = false;
+      UpdateEmployeeComponent.firstNameError = true;
+    }
+
+    if (employee.lastName == '') {
+      validInput = false;
+      UpdateEmployeeComponent.lastNameError = true;
+    }
+
+    if (!this.emailRegEx.test(employee.email) && employee.email != "") {
+      validInput = false;
+      UpdateEmployeeComponent.emailError = true;
+    }
+
+    return validInput;
+  }
+
+  public static resetErrors() {
+    UpdateEmployeeComponent.firstNameError = false;
+    UpdateEmployeeComponent.lastNameError = false;
+    UpdateEmployeeComponent.emailError = false;
   }
 }
