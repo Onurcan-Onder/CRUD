@@ -27,12 +27,6 @@ namespace ProjectCRUD.Controllers
             return Ok(await _employeesService.GetAllEmployees());
         }
 
-        [HttpGet("{EmployeeID}")]
-        public async Task<ActionResult<Employee>> GetById(Guid EmployeeID)
-        {
-            return Ok(await _employeesService.GetEmployeeById(EmployeeID));
-        }
-
         [HttpPost]
         public async Task<ActionResult<List<Employee>>> Add(EmployeeDTO newEmployeeDTO)
         {

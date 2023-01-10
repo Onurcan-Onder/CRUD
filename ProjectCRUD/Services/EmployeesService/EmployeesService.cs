@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjectCRUD.Data;
@@ -36,43 +37,42 @@ namespace ProjectCRUD.Services.EmployeesService
             return cacheData;
         }
 
-        //! Test
-        public async Task<Employee?> GetEmployeeById(Guid EmployeeID)
-        {
-            var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == EmployeeID);
-            return dbEmployee;
-        }
-
         public async Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO)
         //public async Task<Guid> AddEmployee(EmployeeDTO newEmployeeDTO)
         {
-            var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
-
             var today = DateTime.Today;
             var age = today.Year - newEmployeeDTO.DoB.Year;
             if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
+            if (age < 0) age = 0;
 
-            var newEmployee = new Employee {
-                FirstName = newEmployeeDTO.FirstName,
-                LastName = newEmployeeDTO.LastName,
-                DoB = newEmployeeDTO.DoB,
-                Email = newEmployeeDTO.Email,
-                SkillLevel = skillLevel,
-                Active = newEmployeeDTO.Active,
-                Age = age
-            };
+            if (ValidInput(newEmployeeDTO.FirstName, newEmployeeDTO.LastName, newEmployeeDTO.Email, newEmployeeDTO.SkillLevel))
+            {
+                var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
 
-            var addedEmployee = _context.Employees.Add(newEmployee);
-            await _context.SaveChangesAsync();
+                var newEmployee = new Employee {
+                    FirstName = newEmployeeDTO.FirstName,
+                    LastName = newEmployeeDTO.LastName,
+                    DoB = newEmployeeDTO.DoB,
+                    Email = newEmployeeDTO.Email,
+                    SkillLevel = skillLevel,
+                    Active = newEmployeeDTO.Active,
+                    Age = age
+                };
 
-            //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
-            
-            //* Caching
-            var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
-            var expiryTime = DateTimeOffset.Now.AddSeconds(30);
-            _cacheService.SetData(cacheData, expiryTime);
-            return cacheData;
-            //return addedEmployee.Entity.Id;
+                var addedEmployee = _context.Employees.Add(newEmployee);
+                await _context.SaveChangesAsync();
+
+                //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                
+                //* Caching
+                var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+                _cacheService.SetData(cacheData, expiryTime);
+                return cacheData;
+                //return addedEmployee.Entity.Id;   
+            }
+
+            return null;
         }
 
         public async Task<List<Employee>?> UpdateEmployee(EmployeeUpdateDTO updatedEmployeeDTO)
@@ -80,31 +80,36 @@ namespace ProjectCRUD.Services.EmployeesService
         {
             try
             {
-                var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == updatedEmployeeDTO.Id);
-                var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == updatedEmployeeDTO.SkillLevel);
-
-                dbEmployee.FirstName = updatedEmployeeDTO.FirstName;
-                dbEmployee.LastName = updatedEmployeeDTO.LastName;
-                dbEmployee.DoB = updatedEmployeeDTO.DoB;    
-                dbEmployee.Email = updatedEmployeeDTO.Email;
-                dbEmployee.SkillLevel = skillLevel;
-                dbEmployee.Active = updatedEmployeeDTO.Active;
-                
                 var today = DateTime.Today;
                 var age = today.Year - updatedEmployeeDTO.DoB.Year;
                 if (updatedEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
-                dbEmployee.Age = age;
+                if (age < 0) age = 0;
 
-                await _context.SaveChangesAsync();
+                if (ValidInput(updatedEmployeeDTO.FirstName, updatedEmployeeDTO.LastName, updatedEmployeeDTO.Email, updatedEmployeeDTO.SkillLevel))
+                {
+                    var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == updatedEmployeeDTO.Id);
+                    var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == updatedEmployeeDTO.SkillLevel);
 
-                //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                    dbEmployee.FirstName = updatedEmployeeDTO.FirstName;
+                    dbEmployee.LastName = updatedEmployeeDTO.LastName;
+                    dbEmployee.DoB = updatedEmployeeDTO.DoB;    
+                    dbEmployee.Email = updatedEmployeeDTO.Email;
+                    dbEmployee.SkillLevel = skillLevel;
+                    dbEmployee.Active = updatedEmployeeDTO.Active;
+                    dbEmployee.Age = age;
 
-                //* Caching
-                var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
-                var expiryTime = DateTimeOffset.Now.AddSeconds(30);
-                _cacheService.SetData(cacheData, expiryTime);
-                return cacheData;
-                //return dbEmployee;
+                    await _context.SaveChangesAsync();
+
+                    //return await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+
+                    //* Caching
+                    var cacheData = await _context.Employees.Include(s => s.SkillLevel).ToListAsync();
+                    var expiryTime = DateTimeOffset.Now.AddSeconds(30);
+                    _cacheService.SetData(cacheData, expiryTime);
+                    return cacheData;
+                    //return dbEmployee;
+                }
+                return null;
             }
             catch (System.Exception)
             {
@@ -132,6 +137,20 @@ namespace ProjectCRUD.Services.EmployeesService
             {
                 return null;
             }
+        }
+
+        bool ValidInput(string firstName, string lastName, string email, int skillLevel)
+        {
+            if (firstName == "" || !Regex.IsMatch(firstName, @"^[a-zA-Z]+$"))
+                return false;
+            if (lastName == "" || !Regex.IsMatch(lastName, @"^[a-zA-Z]+$"))
+                return false;
+            if (email != "" && !Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+                return false;
+            if (skillLevel < 1 || skillLevel > 3)
+                return false;
+            
+            return true;
         }
     }
 }
