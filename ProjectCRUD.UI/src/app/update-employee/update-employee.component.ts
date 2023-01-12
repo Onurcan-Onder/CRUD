@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { EmployeeDTO } from '../models/employe.dto';
 import { Employee } from '../models/employee';
@@ -23,7 +24,7 @@ export class UpdateEmployeeComponent implements OnInit {
   emailRegEx: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
   static emailRegEx: any;
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService, private router:Router) {
     this.classReference.flag = true;
   }
 
@@ -32,60 +33,77 @@ export class UpdateEmployeeComponent implements OnInit {
 
   updateEmployee(employee:Employee) {
 
-    if (this.validInput(employee)) {
-      var employeeUpdateDTO: EmployeeUpdateDTO = new EmployeeUpdateDTO();
-      employeeUpdateDTO.id = employee.id;
-      employeeUpdateDTO.firstName = employee.firstName;
-      employeeUpdateDTO.lastName = employee.lastName;
-      employeeUpdateDTO.doB = employee.doB;
-      employeeUpdateDTO.email = employee.email;
-      employeeUpdateDTO.skillLevel = employee.skillLevel.id;
-      employeeUpdateDTO.active = employee.active;
-
-      this.crudService
-        .updateEmployee(employeeUpdateDTO)
-        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-      
-      this.classReference.flag = false;
+    //* If I don't have a valid token, then forward me to login
+    if (sessionStorage.getItem('authToken')== null) {
+      this.router.navigate(["Login"]);
     }
-
+    else {
+      if (this.validInput(employee)) {
+        var employeeUpdateDTO: EmployeeUpdateDTO = new EmployeeUpdateDTO();
+        employeeUpdateDTO.id = employee.id;
+        employeeUpdateDTO.firstName = employee.firstName;
+        employeeUpdateDTO.lastName = employee.lastName;
+        employeeUpdateDTO.doB = employee.doB;
+        employeeUpdateDTO.email = employee.email;
+        employeeUpdateDTO.skillLevel = employee.skillLevel.id;
+        employeeUpdateDTO.active = employee.active;
+  
+        this.crudService
+          .updateEmployee(employeeUpdateDTO)
+          .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+        
+        this.classReference.flag = false;
+      }
+    }
   }
 
   deleteEmployee(employee:Employee) {
-    if(confirm("Are you sure to delete "+ employee.firstName + "?")) {
-      this.crudService
-        .deleteEmployee(employee)
-        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-      //window.location.reload();
-      this.classReference.flag = false;
+
+    //* If I don't have a valid token, then forward me to login
+    if (sessionStorage.getItem('authToken')== null) {
+      this.router.navigate(["Login"]);
+    }
+    else {
+      if(confirm("Are you sure to delete "+ employee.firstName + "?")) {
+        this.crudService
+          .deleteEmployee(employee)
+          .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+        //window.location.reload();
+        this.classReference.flag = false;
+      }
     }
   }
 
   createEmployee(employee:Employee) {
 
-    if (this.validInput(employee)) {
-      var employeeDTO: EmployeeDTO = new EmployeeDTO();
-      employeeDTO.firstName = employee.firstName;
-      employeeDTO.lastName = employee.lastName;
-      employeeDTO.doB = employee.doB;
-      employeeDTO.email = employee.email;
-      employeeDTO.skillLevel = employee.skillLevel.id;
-      employeeDTO.active = employee.active;
-
-      this.crudService
-        .createEmployee(employeeDTO)
-        //.subscribe((id: Guid) => id);
-        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-      
-      /*
-      this.crudService
-        .getEmployees()
-        .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
-      */
-
-      this.classReference.flag = false;    
+    //* If I don't have a valid token, then forward me to login
+    if (sessionStorage.getItem('authToken')== null) {
+      this.router.navigate(["Login"]);
     }
-    
+    else {
+      if (this.validInput(employee)) {
+        var employeeDTO: EmployeeDTO = new EmployeeDTO();
+        employeeDTO.firstName = employee.firstName;
+        employeeDTO.lastName = employee.lastName;
+        employeeDTO.doB = employee.doB;
+        employeeDTO.email = employee.email;
+        employeeDTO.skillLevel = employee.skillLevel.id;
+        employeeDTO.active = employee.active;
+
+        this.crudService
+          .createEmployee(employeeDTO)
+          //.subscribe((id: Guid) => id);
+          .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+        
+        /*
+        this.crudService
+          .getEmployees()
+          .subscribe((employees: Employee[]) => this.employeesUpdated.emit(employees));
+        */
+
+        this.classReference.flag = false;    
+      }
+    }
   }
 
   validInput(employee: Employee)
