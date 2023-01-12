@@ -20,7 +20,7 @@
             <th></th>
         </thead>
         <tbody>
-            <tr *ngFor="let employee of employees">
+            <tr *ngFor="let employee of classReference.employees">
                 <td>{{ employee.firstName }}</td>
                 <td>{{ employee.lastName }}</td>
                 <td>{{ employee.doB | date:'yyyy-MM-dd' }}</td>

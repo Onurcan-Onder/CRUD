@@ -45,7 +45,9 @@ namespace ProjectCRUD.Services.EmployeesService
             if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
             if (age < 0) age = 0;
 
-            if (ValidInput(newEmployeeDTO.FirstName, newEmployeeDTO.LastName, newEmployeeDTO.Email, newEmployeeDTO.SkillLevel))
+            //! Test
+            var tempData = GetAllEmployees().Result;
+            if (ValidInput(tempData, null, newEmployeeDTO.FirstName, newEmployeeDTO.LastName, newEmployeeDTO.Email, newEmployeeDTO.SkillLevel))
             {
                 var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == newEmployeeDTO.SkillLevel);
 
@@ -85,7 +87,9 @@ namespace ProjectCRUD.Services.EmployeesService
                 if (updatedEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
                 if (age < 0) age = 0;
 
-                if (ValidInput(updatedEmployeeDTO.FirstName, updatedEmployeeDTO.LastName, updatedEmployeeDTO.Email, updatedEmployeeDTO.SkillLevel))
+                //! Test
+                var tempData = GetAllEmployees().Result;
+                if (ValidInput(tempData, updatedEmployeeDTO.Id, updatedEmployeeDTO.FirstName, updatedEmployeeDTO.LastName, updatedEmployeeDTO.Email, updatedEmployeeDTO.SkillLevel))
                 {
                     var dbEmployee = await _context.Employees.Include(s => s.SkillLevel).FirstOrDefaultAsync(e => e.Id == updatedEmployeeDTO.Id);
                     var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(s => s.Id == updatedEmployeeDTO.SkillLevel);
@@ -139,7 +143,7 @@ namespace ProjectCRUD.Services.EmployeesService
             }
         }
 
-        bool ValidInput(string firstName, string lastName, string email, int skillLevel)
+        bool ValidInput(List<Employee> tempData, Guid? id, string firstName, string lastName, string email, int skillLevel)
         {
             if (firstName == "" || !Regex.IsMatch(firstName, @"^[a-zA-Z]+$"))
                 return false;
@@ -149,7 +153,9 @@ namespace ProjectCRUD.Services.EmployeesService
                 return false;
             if (skillLevel < 1 || skillLevel > 3)
                 return false;
-            
+            if (email != "" && tempData.Any(x => (x.Email.ToLower() == email.ToLower()) && (x.Id != id)))
+                return false;
+
             return true;
         }
     }

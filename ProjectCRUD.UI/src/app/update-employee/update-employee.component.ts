@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
+import { EmployeesComponent } from '../employees/employees.component';
 import { EmployeeDTO } from '../models/employe.dto';
 import { Employee } from '../models/employee';
 import { EmployeeUpdateDTO } from '../models/employee.update.dto';
@@ -20,6 +21,7 @@ export class UpdateEmployeeComponent implements OnInit {
   static firstNameError: boolean;
   static lastNameError: boolean;
   static emailError: boolean;
+  static sameEmailError: boolean;
 
   emailRegEx: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
   static emailRegEx: any;
@@ -121,9 +123,18 @@ export class UpdateEmployeeComponent implements OnInit {
       UpdateEmployeeComponent.lastNameError = true;
     }
 
-    if (!this.emailRegEx.test(employee.email) && employee.email != "") {
+    if (employee.email != "" && !this.emailRegEx.test(employee.email)) {
       validInput = false;
       UpdateEmployeeComponent.emailError = true;
+      UpdateEmployeeComponent.sameEmailError = false;
+    }
+
+    console.log(employee.id);
+
+    if (employee.email != "" && EmployeesComponent.employees.some(x => (x.email.toLowerCase() == employee.email.toLowerCase()) && (x.id != employee.id))) {
+      validInput = false;
+      UpdateEmployeeComponent.sameEmailError = true;
+      UpdateEmployeeComponent.emailError = false;
     }
 
     return validInput;
@@ -133,5 +144,6 @@ export class UpdateEmployeeComponent implements OnInit {
     UpdateEmployeeComponent.firstNameError = false;
     UpdateEmployeeComponent.lastNameError = false;
     UpdateEmployeeComponent.emailError = false;
+    UpdateEmployeeComponent.sameEmailError = false;
   }
 }

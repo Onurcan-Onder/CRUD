@@ -12,8 +12,9 @@ import { UpdateEmployeeComponent } from "../update-employee/update-employee.comp
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
-
-  employees: Employee[] = [];
+  
+  public classReference = EmployeesComponent;
+  static employees: Employee[] = [];
   employeeToUpdate?: Employee;
 
   constructor(private crudService: CrudService, private router:Router) { }
@@ -26,12 +27,12 @@ export class EmployeesComponent implements OnInit {
     else{
       this.crudService
       .getEmployees()
-      .subscribe((result: Employee[]) => (this.employees = result));
+      .subscribe((result: Employee[]) => (EmployeesComponent.employees = result));
     }
   }
 
   updateEmployeeList(employees: Employee[]) {
-    this.employees = employees;
+    EmployeesComponent.employees = employees;
   }
 
   createEmployee()

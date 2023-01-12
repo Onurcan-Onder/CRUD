@@ -22,9 +22,12 @@
     </div>
     <div>
         Email:
-        <input [ngClass]="{'text-box' : classReference.emailError}" [(ngModel)]="employee.email" placeholder="example@email.com" maxlength="100" required/>
+        <input [ngClass]="{'text-box' : classReference.emailError || classReference.sameEmailError}" [(ngModel)]="employee.email" placeholder="example@email.com" maxlength="100" required/>
         <div class="alter-container" *ngIf="classReference.emailError">
             <small class="error-message">{{"The email format is not correct!"}}</small>
+        </div>
+        <div class="alter-container" *ngIf="classReference.sameEmailError">
+            <small class="error-message">{{"The email already exists!"}}</small>
         </div>
     </div>
     <div>
