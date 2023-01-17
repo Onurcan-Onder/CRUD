@@ -15,10 +15,4 @@ export class AuthService {
       { responseType: 'text' }
     );
   }
-
-  public get(): Observable<string> {
-    return this.http.get('http://localhost:5026/api/Employees',
-      { responseType: 'text' }
-    );
-  }
 }
