@@ -129,8 +129,6 @@ export class UpdateEmployeeComponent implements OnInit {
       UpdateEmployeeComponent.sameEmailError = false;
     }
 
-    console.log(employee.id);
-
     if (employee.email != "" && EmployeesComponent.employees.some(x => (x.email.toLowerCase() == employee.email.toLowerCase()) && (x.id != employee.id))) {
       validInput = false;
       UpdateEmployeeComponent.sameEmailError = true;
