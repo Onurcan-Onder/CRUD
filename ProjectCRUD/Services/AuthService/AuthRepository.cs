@@ -23,7 +23,7 @@ namespace ProjectCRUD.Services.AuthService
         }
 
         //! Test
-        public async Task<int?> Register(User user, string password)
+        public async Task<Guid?> Register(User user, string password)
         {
             if (await UserExists(user.Username))
             {

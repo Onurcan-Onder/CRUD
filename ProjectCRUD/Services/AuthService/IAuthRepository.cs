@@ -7,7 +7,7 @@ namespace ProjectCRUD.Services.AuthService
 {
     public interface IAuthRepository
     {
-        Task<int?> Register(User user, string password); //! Test
+        Task<Guid?> Register(User user, string password); //! Test
         Task<string?> Login(string username, string password);
         Task<bool> UserExists(string username); //! Test
     }
