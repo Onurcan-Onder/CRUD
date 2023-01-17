@@ -40,10 +40,18 @@ namespace ProjectCRUD.Services.EmployeesService
         public async Task<List<Employee>> AddEmployee(EmployeeDTO newEmployeeDTO)
         //public async Task<Guid> AddEmployee(EmployeeDTO newEmployeeDTO)
         {
-            var today = DateTime.Today;
-            var age = today.Year - newEmployeeDTO.DoB.Year;
-            if (newEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
-            if (age < 0) age = 0;
+                var sixteen = DateTime.Today.AddYears(-16);
+                var age = 16;
+                if(DateTime.Compare(newEmployeeDTO.DoB, sixteen) < 0)
+                {
+                    age = DateTime.Today.Year - newEmployeeDTO.DoB.Year;
+                    if (newEmployeeDTO.DoB.Date > DateTime.Today.AddYears(-age)) age--;
+                }
+                else
+                {
+                    age = 16;
+                    newEmployeeDTO.DoB = sixteen;
+                }
 
             //! Test
             var tempData = GetAllEmployees().Result;
@@ -82,10 +90,18 @@ namespace ProjectCRUD.Services.EmployeesService
         {
             try
             {
-                var today = DateTime.Today;
-                var age = today.Year - updatedEmployeeDTO.DoB.Year;
-                if (updatedEmployeeDTO.DoB.Date > today.AddYears(-age)) age--;
-                if (age < 0) age = 0;
+                var sixteen = DateTime.Today.AddYears(-16);
+                var age = 16;
+                if(DateTime.Compare(updatedEmployeeDTO.DoB, sixteen) < 0)
+                {
+                    age = DateTime.Today.Year - updatedEmployeeDTO.DoB.Year;
+                    if (updatedEmployeeDTO.DoB.Date > DateTime.Today.AddYears(-age)) age--;
+                }
+                else
+                {
+                    age = 16;
+                    updatedEmployeeDTO.DoB = sixteen;
+                }
 
                 //! Test
                 var tempData = GetAllEmployees().Result;
