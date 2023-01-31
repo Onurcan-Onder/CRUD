@@ -4,3 +4,4 @@ ASP.NET CRUD Operations with REST API
 - Frontend: AngularJS
 - Database: Entity Framework, SQL
 - Caching: Redis on Docker
+- Testing: Python, Selenium
