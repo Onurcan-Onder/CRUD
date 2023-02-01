@@ -5,3 +5,4 @@ ASP.NET CRUD Operations with REST API
 - Database: Entity Framework, SQL
 - Caching: Redis on Docker
 - Testing: Python, Selenium
+- Authorization: JWT
